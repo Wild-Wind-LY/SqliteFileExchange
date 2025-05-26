@@ -1,0 +1,9 @@
+/build/*
+.cache
+.vscode
+../.vscode/
+/third_party/*
+!/third_party/CPM/
+!/third_party/CPM/**
+/download/*
+/lib/*
