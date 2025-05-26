@@ -26,6 +26,7 @@ endif()
 # 添加需要的库
 CPMAddPackage("gh:gabime/spdlog@1.15.2")
 CPMAddPackage("gh:fnc12/sqlite_orm@1.9.1")
+if(EXISTS "${CMAKE_SOURCE_DIR}/third_party/range-v3")
 CPMAddPackage(
     NAME range-v3
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third_party/range-v3
@@ -35,6 +36,9 @@ CPMAddPackage(
         "RANGE_V3_INCLUDE_BENCHMARKS OFF"
         "RANGE_V3_INCLUDE_EXAMPLES OFF"
 )
+else()
+CPMAddPackage("gh:ericniebler/range-v3#0.12.0")
+endif()       
 
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -49,11 +53,8 @@ else()
     find_package(SQLite3 REQUIRED)
 endif()
 
-# 查找并链接依赖库
-# find_package(fmt REQUIRED)
-# find_package(glfw REQUIRED)
 
-# target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt glfw::glfw)
+
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE spdlog SQLite::SQLite3 sqlite_orm range-v3)
